@@ -50,5 +50,10 @@ then
 	echo "JBOSS_CONSOLE_LOG=/var/log/torquebox/console.log" >> /etc/jboss-as/jboss-as.conf
 	echo "JBOSS_CONFIG=standalone-ha.xml" >> /etc/jboss-as/jboss-as.conf
 fi
+TORQUEBOX_USER="torquebox"
+if ! id $TORQUEBOX_USER > /dev/null 2>&1
+then
+	adduser --no-create-home $TORQUEBOX_USER
+fi
 chkconfig --add jboss-as-standalone
 service jboss-as-standalone start
