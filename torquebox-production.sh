@@ -5,14 +5,22 @@ TORQUEBOX_PROFILE=/etc/profile.d/torquebox.sh
 
 yum install java
 cd /opt
-wget -O $TORQUEBOX_ZIP $TORQUEBOX_URL
-mkdir /opt/torquebox
-unzip $TORQUEBOX_ZIP -d /opt/torquebox/
-cd /opt/torquebox
-ln -s torquebox-$TORQUEBOX_VERSION current
+if [ -f $TORQUEBOX_ZIP ]
+then
+	wget -O $TORQUEBOX_ZIP $TORQUEBOX_URL
+fi
+
+if [ -d /opt/torquebox ]
+then
+	mkdir /opt/torquebox
+	unzip $TORQUEBOX_ZIP -d /opt/torquebox/
+	cd /opt/torquebox
+	ln -s torquebox-$TORQUEBOX_VERSION current
+fi
 
 
-if [ -f $TORQUEBOX_PROFILE]
+
+if [ -f $TORQUEBOX_PROFILE ]
 then
 	touch $TORQUEBOX_PROFILE
 	export TORQUEBOX_HOME=/opt/torquebox/current
@@ -24,13 +32,13 @@ then
 	echo "export JRUBY_HOME=$TORQUEBOX_HOME/jruby" >> /etc/profile.d/torquebox.sh
 	echo "PATH=$JBOSS_HOME/bin:$JRUBY_HOME/bin:$PATH" >> /etc/profile.d/torquebox.sh
 fi
-if [ -f /etc/init.d/jboss-as-standalone]
+if [ -f /etc/init.d/jboss-as-standalone ]
 then
 	cp $JBOSS_HOME/bin/init.d/jboss-as-standalone.sh /etc/init.d/jboss-as-standalone
 fi
-if [ -f /etc/jboss-as/jboss-as.conf]
+if [ -f /etc/jboss-as/jboss-as.conf ]
 then
-	if [ -d /etc/jboss-as]
+	if [ -d /etc/jboss-as ]
 	then	
 		mkdir /etc/jboss-as
 	fi
