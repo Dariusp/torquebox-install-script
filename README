@@ -1,0 +1,6 @@
+login to your server with root
+
+run 
+```bash
+wget https://raw.github.com/Dariusp/torquebox-install-script/master/torquebox-production.sh && sh torquebox-production.sh
+```
